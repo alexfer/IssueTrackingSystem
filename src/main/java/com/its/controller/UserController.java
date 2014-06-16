@@ -28,7 +28,7 @@ public final class UserController extends AppController {
         view.addObject("title", "Users - " + appTitle);
 
         try {
-            List<Users> list = UserDao.list();
+            List<Users> list = UserDao.list(25, 0);
             view.addObject("users", list);
         } catch (Exception e) {
             throw new Exception(e.getMessage());

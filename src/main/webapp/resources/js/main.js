@@ -6,7 +6,7 @@ $(document).ready(function() {
         alert.addClass(_class).html(message).fadeIn();
         setTimeout(function() {
             alert.removeClass(_class).html('').fadeOut();
-        }, 5000);
+        }, 10000);
     };
 
     var request = function(self, method, url, callback) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
                     if (callback) {
                         return callback();
                     }
-                    flashMessage('alert-success', response.message);                    
+                    flashMessage('alert-success', response.message);
                 }
             },
             error: function(xml_http_request, text_status, error_thrown) {
@@ -40,15 +40,19 @@ $(document).ready(function() {
         request($(this), "POST", "/user");
         e.preventDefault();
     });
+
     $('#edit-user').on('submit', function(e) {
-        request($(this), "POST", document.URL);
+        request($(this), "PUT", document.URL);
         e.preventDefault();
     });
 
     $('.delete-user').on('click', function(e) {
-        request('', "DELETE", "/user/" + $(this).attr('data-id'), function() {
-            window.location.href = '/' + window.location.pathname.split('/')[1];
-        });
+        var id = $(this).attr('data-id');
+        if (confirm("Do you want to delete the user ID: " + id + "?")) {
+            request('', "DELETE", "/user/" + id, function() {
+                window.location.href = '/' + window.location.pathname.split('/')[1];
+            });
+        }
         e.preventDefault();
     });
 

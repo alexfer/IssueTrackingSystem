@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="segment" value="user"></c:set>
     <!DOCTYPE html>
     <html lang="en-US">
@@ -10,24 +11,33 @@
             <c:choose>
                 <c:when test="${!empty users}">
                     <h1>Users</h1>
-                    <table class="table">
-                        <tr>
-                            <th>ID</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Actions</th>
-                        </tr>
-                        <c:forEach var="user" items="${users}">
-                            <tr>
-                                <td><c:out value="${user.getId()}"></c:out></td>
-                                <td><c:out value="${user.getEmail()}"></c:out></td>
-                                <td><c:out value="${user.getCreatedAt()}"></c:out></td>
-                                <td><c:out value="${user.getUpdatedAt()}"></c:out></td>
-                                <td><a href="/user/${user.getId()}">Edit</a> <a class="delete-user" data-id="${user.getId()}" href="#">Delete</a></td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th>Email</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="user" items="${users}">
+                                    <tr>
+                                        <td class="text-center"><c:out value="${user.getId()}"></c:out></td>
+                                        <td><a href="mailto:<c:out value="${user.getEmail()}"></c:out>"><c:out value="${user.getEmail()}"></c:out></a></td>
+                                        <td><fmt:formatDate value="${user.getCreatedAt()}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                        <td><fmt:formatDate value="${user.getUpdatedAt()}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                        <td class="text-center">
+                                            <a class="btn btn-default btn-xs" href="/user/${user.getId()}" role="button"><i class="glyphicon glyphicon-pencil"></i> Edit</a> 
+                                            <a class="delete-user btn btn-default btn-xs" data-id="${user.getId()}" href="#" role="button"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <c:choose>

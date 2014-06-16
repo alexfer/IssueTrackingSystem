@@ -4,7 +4,6 @@ import com.its.model.Users;
 import com.its.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -17,11 +16,10 @@ public class UserDao {
     private static Session session = null;
     private static Transaction tx = null;
 
-    public static List<Users> list() throws Exception {
+    public static List<Users> list(int limit, int offset) throws Exception {
         List<Users> list = null;
         try {
-            Query query = openSession().createQuery("from Users");
-            list = query.list();
+            list = openSession().createCriteria(Users.class).setFirstResult(offset).setMaxResults(limit).list();
         } catch (HibernateException e) {
             throw new Exception(e.getMessage());
         } finally {
