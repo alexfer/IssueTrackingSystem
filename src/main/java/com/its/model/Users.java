@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Users implements java.io.Serializable {
 
     private Integer id;
-    @Size(min = 6, max = 15, message = "Password must between 6 and 15 characters.")
+    @Size(min = 6, message = "Password must be at least 6 characters.")
     private String password;
     @NotEmpty(message = "Email address may not be empty.")
     @Email(message = "Please provide a valid email address.")

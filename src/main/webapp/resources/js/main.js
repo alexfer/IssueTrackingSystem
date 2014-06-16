@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
 
     $('#edit-user').on('submit', function(e) {
-        request($(this), "PUT", document.URL);
+        request($(this), "POST", document.URL);
         e.preventDefault();
     });
 

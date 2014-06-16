@@ -52,7 +52,7 @@ public final class UserController extends AppController {
             user.setSuccess(false);
         } else {
             user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
+            user.setPassword(getHashPassword(request.getParameter("password")));
             user.setCreatedAt(new Date());
             user.setUpdatedAt(new Date());
             user.setSuccess(true);
@@ -80,7 +80,7 @@ public final class UserController extends AppController {
         } else {
             user.setId(id);
             user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
+            user.setPassword(getHashPassword(request.getParameter("password")));
             user.setUpdatedAt(new Date());
             user.setSuccess(true);
             user.setMessage("User has been updated successfully.");
